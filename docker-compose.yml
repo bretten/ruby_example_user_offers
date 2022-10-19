@@ -5,7 +5,8 @@ services:
     ports:
       - "30001:3000"
     environment:
-      - DATABASE_URL=postgres://offers_admin:password123@db/user_offers #db is hostname
+      - DATABASE_URL_DEV=postgres://offers_admin:password123@db/user_offers_dev #db is hostname
+      - DATABASE_URL_TEST=postgres://offers_admin:password123@db/user_offers_test #db is hostname
     volumes:
       - .:/usr/src/app
     tty: true # attach a terminal
@@ -17,7 +18,6 @@ services:
     environment:
       - POSTGRES_USER=offers_admin
       - POSTGRES_PASSWORD=password123
-      - POSTGRES_DB=user_offers
     volumes:
       - pgsql_db:/var/lib/postgresql/data
 
