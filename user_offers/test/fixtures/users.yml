@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  username: user1
+  first_name: jane
+  last_name: doe
+  birthdate: 2000-10-19
+  gender: 0
+  password: pass1
+
+two:
+  username: user2
+  first_name: john
+  last_name: doe
+  birthdate: 1999-10-19
+  gender: 1
+  password: pass2
