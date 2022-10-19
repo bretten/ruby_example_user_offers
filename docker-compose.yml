@@ -4,6 +4,22 @@ services:
     build: .
     ports:
       - "30001:3000"
+    environment:
+      - DATABASE_URL=postgres://offers_admin:password123@db/user_offers #db is hostname
     volumes:
       - .:/usr/src/app
     tty: true # attach a terminal
+  db:
+    container_name: ruby_offers_db_pgsql
+    image: postgres:14.5
+    ports:
+      - "54320:5432"
+    environment:
+      - POSTGRES_USER=offers_admin
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=user_offers
+    volumes:
+      - pgsql_db:/var/lib/postgresql/data
+
+volumes:
+  pgsql_db:
