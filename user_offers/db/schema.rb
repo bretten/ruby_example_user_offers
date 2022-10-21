@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_20_080602) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_090602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "offer_demographics", force: :cascade do |t|
+    t.integer "minimum_age"
+    t.integer "maximum_age"
+    t.integer "gender"
+    t.bigint "offer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["offer_id"], name: "index_offer_demographics_on_offer_id"
+  end
 
   create_table "offers", force: :cascade do |t|
     t.text "description"
@@ -32,4 +42,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080602) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "offer_demographics", "offers"
 end

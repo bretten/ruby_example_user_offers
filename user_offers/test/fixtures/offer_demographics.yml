@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  minimum_age: 10
+  maximum_age: 20
+  gender: 1
+  offer: one
+
+two:
+  minimum_age: 30
+  maximum_age: 40
+  gender: 1
+  offer: two
