@@ -70,3 +70,15 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+# For authentication
+gem 'devise'
+gem 'devise-jwt'
+
+# For React
+gem 'rack-cors'
+
+# For testing
+group :development, :test do
+  gem 'factory_bot_rails'
+end
