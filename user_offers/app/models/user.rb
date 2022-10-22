@@ -13,7 +13,7 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   def age_in_years(date_to_calculate_age)
-    age_in_days = (date_to_calculate_age - birthdate).to_i
+    age_in_days = (date_to_calculate_age.to_date - birthdate).to_i
     age_in_seconds = age_in_days * 86400 # seconds in a day
     ActiveSupport::Duration.build(age_in_seconds).in_years.floor
   end
