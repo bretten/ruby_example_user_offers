@@ -48,7 +48,7 @@ There is a `hasMany` relationship from `Offer` to `OfferDemographic`. In other w
 * An `Offer` has many `OfferDemographics`
 * An `OfferDemographic` belongs to an `Offer`
 
-![image](https://user-images.githubusercontent.com/5249819/197414506-8b151817-e730-426f-bd8e-14bc914bd122.png)
+![image](https://user-images.githubusercontent.com/5249819/197414754-c248fdf6-f456-4bd6-8239-a877eef3fa5d.png)
 
 ### How could this have been done differently?
 
@@ -79,3 +79,6 @@ In other words, the tables would look like:
 
 * offer_id
 * demographic_id
+
+![image](https://user-images.githubusercontent.com/5249819/197414758-579afc02-44b8-4e0b-aa87-6017164e24fb.png)
+
