@@ -48,6 +48,8 @@ There is a `hasMany` relationship from `Offer` to `OfferDemographic`. In other w
 * An `Offer` has many `OfferDemographics`
 * An `OfferDemographic` belongs to an `Offer`
 
+![image](https://user-images.githubusercontent.com/5249819/197414506-8b151817-e730-426f-bd8e-14bc914bd122.png)
+
 ### How could this have been done differently?
 
 In `OfferDemographic`, aside from the foreign key (`offer_id`), there is no information uniquely tying it to the offer.
