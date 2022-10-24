@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {List} from "@mui/material";
 import Offer from "../Offer/Offer";
 
-function Offers({token, clearToken}) {
+function OfferList({token, clearToken}) {
   const [data, setData] = useState(null);
   const navigate = useNavigate();
 
@@ -53,9 +53,9 @@ function Offers({token, clearToken}) {
   );
 }
 
-Offers.propTypes = {
+OfferList.propTypes = {
   token: PropTypes.string,
   clearToken: PropTypes.func.isRequired
 };
 
-export default Offers;
+export default OfferList;

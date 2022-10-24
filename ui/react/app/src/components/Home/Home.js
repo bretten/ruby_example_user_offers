@@ -1,5 +1,5 @@
 import React from 'react';
-import Offers from "../Offers/Offers";
+import OfferList from "../OfferList/OfferList";
 import PropTypes from "prop-types";
 
 function Home({token, clearToken}) {
@@ -9,7 +9,7 @@ function Home({token, clearToken}) {
         token !== null ? (
           <div>
             <h1>Welcome back!</h1>
-            <Offers token={token} clearToken={clearToken} />
+            <OfferList token={token} clearToken={clearToken} />
           </div>
         ) : (
           <div>
