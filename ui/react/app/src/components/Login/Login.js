@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import {Navigate, useNavigate} from "react-router-dom";
+import {Alert, TextField} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 async function SendLoginRequest(credentials) {
   return await fetch(process.env.REACT_APP_OFFERS_BASE_URL + '/login', {
@@ -40,7 +43,7 @@ function Login({token, setToken}) {
     });
 
     // Was there an incorrect login?
-    setIsIncorrectLogin(response.status === 401);
+    setIsIncorrectLogin(response.status !== 200);
 
     // Successful login, so store the token
     if (response.status === 200) {
@@ -53,18 +56,34 @@ function Login({token, setToken}) {
   return (
     <div>
       <h1>Login</h1>
-      {isIncorrectLogin ? <p>FAIL</p> : null}
-      <form onSubmit={onSubmit}>
-        <label title="E-mail">
-          <input name="email" type="text" onChange={e => setEmail(e.target.value)} />
-        </label>
-        <label title="Password">
-          <input name="password" type="password" onChange={e => setPassword(e.target.value)} />
-        </label>
+      {
+        isIncorrectLogin ?
+          <div>
+            <Alert severity="error">Invalid e-mail or password.</Alert>
+          </div>
+          : null
+      }
+      <Box component="form" onSubmit={onSubmit} sx={{'& .MuiTextField-root': {m: 1, width: '25ch'},}}>
         <div>
-          <button type="submit">Login</button>
+          <TextField
+            onChange={(e) => setEmail(e.target.value)}
+            label="E-mail"
+            InputProps={{
+              name: 'email',
+              type: 'text',
+            }} />
+          <TextField
+            onChange={(e) => setPassword(e.target.value)}
+            label="Password"
+            InputProps={{
+              name: 'password',
+              type: 'password',
+            }} />
         </div>
-      </form>
+        <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
+          <Button variant="outlined" type="submit">Login</Button>
+        </Box>
+      </Box>
     </div>
   );
 }

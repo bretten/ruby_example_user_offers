@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
+import {List} from "@mui/material";
+import Offer from "../Offer/Offer";
 
-function Offers({token, clearToken}) {
+function OfferList({token, clearToken}) {
   const [data, setData] = useState(null);
   const navigate = useNavigate();
 
@@ -22,8 +24,7 @@ function Offers({token, clearToken}) {
         navigate('/login');
         return;
       }
-      const json = await response.json();
-      setData(json);
+      setData((await response.json()).message);
     };
 
     fetchOffers();
@@ -31,19 +32,31 @@ function Offers({token, clearToken}) {
 
   return (
     <div>
-      <h1>Offers list</h1>
+      <h2>Your personalized offers are below...</h2>
       <div>
-        {data ? (
-          <div>{JSON.stringify(data)}</div>
-        ) : null}
+        <List
+          sx={{
+            width: '100%',
+            maxWidth: 360,
+            bgcolor: 'background.paper',
+          }}>
+          {data && data.length > 0 ?
+            data.map((item) => (
+              <Offer key={item.offer.id.toString()} id={item.offer.id.toString()}
+                     description={item.offer.description} />
+            )) : (
+              <span>There are no offers in our system that match your age and gender.</span>
+            )
+          }
+        </List>
       </div>
     </div>
   );
 }
 
-Offers.propTypes = {
+OfferList.propTypes = {
   token: PropTypes.string,
   clearToken: PropTypes.func.isRequired
 };
 
-export default Offers;
+export default OfferList;
