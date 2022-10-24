@@ -1,10 +1,8 @@
-import useToken from "../../hooks/useToken";
 import {Link} from "react-router-dom";
 import React from "react";
+import PropTypes from "prop-types";
 
-export default function Navigation() {
-  const {token} = useToken();
-
+function Navigation({token}) {
   if (token !== null) {
     return (
       <nav>
@@ -29,3 +27,9 @@ export default function Navigation() {
     </nav>
   );
 }
+
+Navigation.propTypes = {
+  token: PropTypes.string
+};
+
+export default Navigation;

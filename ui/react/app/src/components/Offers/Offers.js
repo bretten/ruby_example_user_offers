@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import useToken from "../../hooks/useToken";
 import {useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
 
-export default function Offers() {
-  const {token, setToken, clearToken} = useToken();
+function Offers({token, clearToken}) {
   const [data, setData] = useState(null);
   const navigate = useNavigate();
 
@@ -38,3 +37,10 @@ export default function Offers() {
     </div>
   );
 }
+
+Offers.propTypes = {
+  token: PropTypes.string,
+  clearToken: PropTypes.func.isRequired
+};
+
+export default Offers;

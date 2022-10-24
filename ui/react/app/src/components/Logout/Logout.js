@@ -1,9 +1,13 @@
-import useToken from "../../hooks/useToken";
 import {Navigate} from "react-router-dom";
+import PropTypes from "prop-types";
 
-export default function Logout() {
-  const {token, setToken, clearToken} = useToken();
-
+function Logout({clearToken}) {
   clearToken();
-  return <Navigate to='/' />;
+  return (<Navigate to='/' />);
 }
+
+Logout.propTypes = {
+  clearToken: PropTypes.func.isRequired
+};
+
+export default Logout;

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
-import useToken from "../../hooks/useToken";
+import PropTypes from "prop-types";
 
 async function SendRegisterRequest(credentials) {
   return await fetch('http://localhost:30001/signup', {
@@ -20,7 +20,7 @@ async function SendRegisterRequest(credentials) {
 }
 
 
-export default function Register() {
+function Register({token, setToken}) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [firstName, setFirstName] = useState(null);
@@ -29,7 +29,6 @@ export default function Register() {
   const [gender, setGender] = useState(null);
 
   const [isBadRequest, setIsBadRequest] = useState(false);
-  const {token, setToken} = useToken();
   const navigate = useNavigate();
 
   // Already logged in
@@ -114,3 +113,10 @@ export default function Register() {
     </div>
   );
 }
+
+Register.propTypes = {
+  token: PropTypes.string,
+  setToken: PropTypes.func.isRequired
+};
+
+export default Register;

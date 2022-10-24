@@ -13,10 +13,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login setToken={setToken} />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<Logout />} />
+        <Route path="/" element={<Home token={token} clearToken={clearToken} />} />
+        <Route path="/login" element={<Login token={token} setToken={setToken} />} />
+        <Route path="/register" element={<Register token={token} setToken={setToken} />} />
+        <Route path="/logout" element={<Logout clearToken={clearToken} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

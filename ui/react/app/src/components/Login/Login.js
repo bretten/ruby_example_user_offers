@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import {Navigate, useNavigate} from "react-router-dom";
-import useToken from "../../hooks/useToken";
 
 async function SendLoginRequest(credentials) {
   return await fetch('http://localhost:30001/login', {
@@ -21,11 +20,10 @@ async function SendLoginRequest(credentials) {
 }
 
 
-export default function Login(props) {
+function Login({token, setToken}) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [isIncorrectLogin, setIsIncorrectLogin] = useState(false);
-  const {token, setToken} = useToken();
   const navigate = useNavigate();
 
   // Already logged in
@@ -47,7 +45,7 @@ export default function Login(props) {
     // Successful login, so store the token
     if (response.status === 200) {
       const newToken = response.headers.get("Authorization");
-      props.setToken(newToken);
+      setToken(newToken);
       navigate('/');
     }
   }
@@ -72,5 +70,8 @@ export default function Login(props) {
 }
 
 Login.propTypes = {
+  token: PropTypes.string,
   setToken: PropTypes.func.isRequired
 };
+
+export default Login;
