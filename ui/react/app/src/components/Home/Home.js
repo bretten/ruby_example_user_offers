@@ -1,23 +1,23 @@
 import React from 'react';
 import Offers from "../Offers/Offers";
-import Navigation from "../Navigation/Navigation";
 import PropTypes from "prop-types";
 
 function Home({token, clearToken}) {
   return (
     <div>
-      <div>
-        <h1>Navigation</h1>
-        <Navigation token={token} />
-      </div>
-      <div>
-        <h1>Content</h1>
-        {
-          token !== null ? (
+      {
+        token !== null ? (
+          <div>
+            <h1>Welcome back!</h1>
             <Offers token={token} clearToken={clearToken} />
-          ) : (<span>Please register or login</span>)
-        }
-      </div>
+          </div>
+        ) : (
+          <div>
+            <h1>Greetings!</h1>
+            <p>Please login or register.</p>
+          </div>
+        )
+      }
     </div>
   );
 }

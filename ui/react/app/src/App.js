@@ -6,6 +6,7 @@ import Register from "./components/Register/Register";
 import useToken from "./hooks/useToken";
 import Logout from "./components/Logout/Logout";
 import NotFound from "./components/NotFound/NotFound";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   const {token, setToken, clearToken} = useToken();
@@ -13,11 +14,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home token={token} clearToken={clearToken} />} />
-        <Route path="/login" element={<Login token={token} setToken={setToken} />} />
-        <Route path="/register" element={<Register token={token} setToken={setToken} />} />
-        <Route path="/logout" element={<Logout clearToken={clearToken} />} />
-        <Route path="*" element={<NotFound />} />
+        <Route element={<Layout token={token} />}>
+          <Route path="/" element={<Home token={token} clearToken={clearToken} />} />
+          <Route path="/login" element={<Login token={token} setToken={setToken} />} />
+          <Route path="/register" element={<Register token={token} setToken={setToken} />} />
+          <Route path="/logout" element={<Logout clearToken={clearToken} />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

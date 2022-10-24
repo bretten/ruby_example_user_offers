@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
+import {Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import Button from "@mui/material/Button";
 
 async function SendRegisterRequest(credentials) {
   return await fetch(process.env.REACT_APP_OFFERS_BASE_URL + '/signup', {
@@ -36,6 +40,10 @@ function Register({token, setToken}) {
     return <Navigate to="/" />;
   }
 
+  const handleBirthdateChange = (newValue) => {
+    setBirthdate(newValue);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const response = await SendRegisterRequest({
@@ -63,52 +71,76 @@ function Register({token, setToken}) {
       <h1>Register</h1>
       {isBadRequest ? <p>FAIL</p> : null}
       <form onSubmit={onSubmit}>
-        <div>
-          <label title="E-mail">
-            E-mail (username)
-            <input name="email" type="text" onChange={e => setEmail(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label title="Password">
-            Password
-            <input name="password" type="password" onChange={e => setPassword(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label title="First name">
-            First Name
-            <input name="first_name" type="text" onChange={e => setFirstName(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label title="Last name">
-            Last Name
-            <input name="last_name" type="text" onChange={e => setLastName(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label title="Birthdate">
-            Birthdate
-            <input name="birthdate" type="text" onChange={e => setBirthdate(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label title="Gender">
-            Gender
-            <select name="gender" onChange={e => setGender(e.target.value)}>
-              <option value="none"></option>
-              <option key="0" value="0">F</option>
-              <option key="1" value="1">M</option>
-              <option key="2" value="2">Other</option>
-              <option key="3" value="3">Non-binary</option>
-            </select>
-
-          </label>
-        </div>
-        <div>
-          <button type="submit">Register</button>
-        </div>
+        <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
+          <TextField
+            onChange={(e) => setEmail(e.target.value)}
+            label="E-mail"
+            InputProps={{
+              name: 'email',
+              type: 'text',
+            }} />
+        </Box>
+        <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
+          <TextField
+            onChange={(e) => setPassword(e.target.value)}
+            label="Password"
+            InputProps={{
+              name: 'password',
+              type: 'password',
+            }} />
+        </Box>
+        <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
+          <TextField
+            onChange={(e) => setFirstName(e.target.value)}
+            label="First Name"
+            InputProps={{
+              name: 'first_name',
+              type: 'text',
+            }} />
+        </Box>
+        <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
+          <TextField
+            onChange={(e) => setLastName(e.target.value)}
+            label="Last Name"
+            InputProps={{
+              name: 'last_name',
+              type: 'text',
+            }} />
+        </Box>
+        <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Birthdate"
+              inputFormat="YYYY-MM-DD"
+              value={birthdate}
+              onChange={handleBirthdateChange}
+              renderInput={(params) => <TextField {...params} />}
+              InputProps={{
+                name: 'birthdate',
+                type: 'text',
+              }} />
+          </LocalizationProvider>
+        </Box>
+        <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
+          <FormControl fullWidth>
+            <InputLabel id="gender-label">Gender</InputLabel>
+            <Select
+              labelId="gender-label"
+              id="gender-select"
+              value={gender}
+              label="Age"
+              onChange={e => setGender(e.target.value)}
+            >
+              <MenuItem value={0}>F</MenuItem>
+              <MenuItem value={1}>M</MenuItem>
+              <MenuItem value={2}>Other</MenuItem>
+              <MenuItem value={3}>Non-binary</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
+          <Button variant="outlined" type="submit">Register</Button>
+        </Box>
       </form>
     </div>
   );
