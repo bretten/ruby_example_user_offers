@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
-import {Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Alert, Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import Button from "@mui/material/Button";
@@ -30,9 +30,9 @@ function Register({token, setToken}) {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [birthdate, setBirthdate] = useState(null);
-  const [gender, setGender] = useState(null);
+  const [gender, setGender] = useState(0);
 
-  const [isBadRequest, setIsBadRequest] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   // Already logged in
@@ -55,21 +55,39 @@ function Register({token, setToken}) {
       gender
     });
 
-    // Was there an incorrect login?
-    setIsBadRequest(response.status !== 200);
-
     // Successful login, so store the token
     if (response.status === 200) {
       const newToken = response.headers.get("Authorization");
       setToken(newToken);
       navigate('/');
+    } else {
+      const errorResponse = (await response.json()).message;
+      const validationMessages = [];
+      Object.keys(errorResponse).map((fieldName, index) => {
+        errorResponse[fieldName].map(msg => {
+          const fieldAndMessage = fieldName + " " + msg;
+          if (validationMessages.indexOf(fieldAndMessage) === -1) {
+            validationMessages.push(fieldAndMessage);
+          }
+        })
+      });
+
+      setErrorMessage(validationMessages.join(", "));
     }
   }
 
   return (
     <div>
       <h1>Register</h1>
-      {isBadRequest ? <p>FAIL</p> : null}
+      {
+        errorMessage !== null ?
+          (
+            <div>
+              <Alert severity="error">{errorMessage}</Alert>
+            </div>
+          )
+          : null
+      }
       <form onSubmit={onSubmit}>
         <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
           <TextField

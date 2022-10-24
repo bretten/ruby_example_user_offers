@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import {Navigate, useNavigate} from "react-router-dom";
-import {TextField} from "@mui/material";
+import {Alert, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
@@ -26,7 +26,7 @@ async function SendLoginRequest(credentials) {
 function Login({token, setToken}) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [isIncorrectLogin, setIsIncorrectLogin] = useState(false);
+  const [incorrectCredentials, setIncorrectCredentials] = useState(false);
   const navigate = useNavigate();
 
   // Already logged in
@@ -42,21 +42,26 @@ function Login({token, setToken}) {
       password
     });
 
-    // Was there an incorrect login?
-    setIsIncorrectLogin(response.status === 401);
-
     // Successful login, so store the token
     if (response.status === 200) {
       const newToken = response.headers.get("Authorization");
       setToken(newToken);
       navigate('/');
+    } else {
+      setIncorrectCredentials(true);
     }
   }
 
   return (
     <div>
       <h1>Login</h1>
-      {isIncorrectLogin ? <p>FAIL</p> : null}
+      {
+        incorrectCredentials ?
+          <div>
+            <Alert severity="error">Invalid e-mail or password.</Alert>
+          </div>
+          : null
+      }
       <Box component="form" onSubmit={onSubmit} sx={{'& .MuiTextField-root': {m: 1, width: '25ch'},}}>
         <div>
           <TextField
