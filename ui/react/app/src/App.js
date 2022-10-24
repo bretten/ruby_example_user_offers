@@ -5,6 +5,7 @@ import Home from "./components/Home/Home";
 import Register from "./components/Register/Register";
 import useToken from "./hooks/useToken";
 import Logout from "./components/Logout/Logout";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   const {token, setToken, clearToken} = useToken();
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login setToken={setToken} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
