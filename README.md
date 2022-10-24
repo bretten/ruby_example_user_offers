@@ -7,6 +7,23 @@ The objective of this app is to provide targeted offers to users based on the fo
 
 See the full specifications [here](https://github.com/bretten/ruby_example_user_offers/wiki/Spec).
 
+# What does the app stack look like?
+* Ruby on Rails 7 API only backend
+  * Allows registration. login, logout
+  * Serves Offers to authenticated Users
+  * Authenticates by checking `Authorization` header
+* PostgreSQL database
+  * Registered users are persisted here
+  * Stores Offers (pre-seeded from test file)
+  * Stores Offer demographics (age range and gender)
+* React frontend
+  * React single page application + [react router](https://www.npmjs.com/package/react-router-dom)
+  * Stores authentication token from login endpoint in session storage
+  * Logout clears session storage
+
+![image](https://user-images.githubusercontent.com/5249819/197590898-2524a736-51d4-4cd6-bef4-46a9ac6e4ae8.png)
+
+
 # How do you run it locally?
 
 Running it requires docker compose.

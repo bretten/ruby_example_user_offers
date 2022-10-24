@@ -10,6 +10,28 @@ services:
     volumes:
       - .:/usr/src/app
     tty: true # attach a terminal
+  ui:
+    container_name: ruby_offers_ui
+    build: ./ui/react
+    ports:
+      - "30000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Pre create-ui-app 5.x
+      - WATCHPACK_POLLING=true # Post create-ui-app 5.x
+      - FAST_REFRESH=false
+      # React will attempt to hot reload and live refresh using the port on the container
+      # Force it to use the port on the host machine, where we will be viewing app in the browser
+      # Otherwise, the browser will have the error: WebSocket connection to 'ws://localhost:3000/ws' failed
+      - WDS_SOCKET_PORT=30000
+    volumes:
+      - ./ui/react/app:/usr/src/app
+      # During build, node_modules is created with installed deps
+      # During runtime, the host app folder is mounted by the mount above and hides the container node_modules
+      # So create this anonymous volume to copy in the deps from the built image before the above mount is made
+      - /usr/src/app/node_modules
+    tty: true
+    stdin_open: true
+    command: npm start
   db:
     container_name: ruby_offers_db_pgsql
     image: postgres:14.5

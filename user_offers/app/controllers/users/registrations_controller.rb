@@ -67,14 +67,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def respond_with(resource, _opts = {})
     register_success && return if resource.persisted?
 
-    register_failed
+    register_failed(resource)
   end
 
   def register_success
     render json: { message: I18n.t("devise.registrations.signed_up") }
   end
 
-  def register_failed
-    render json: { message: I18n.t("errors.messages.not_saved.one") }
+  def register_failed(resource)
+    render json: { message: resource.errors }, status: :bad_request
   end
 end
