@@ -1,15 +1,17 @@
 services:
   app:
     container_name: ruby_offers
-    build: .
+    build: ./user_offers
     ports:
       - "30001:3000"
     environment:
       - DATABASE_URL_DEV=postgres://offers_admin:password123@db/user_offers_dev #db is hostname
       - DATABASE_URL_TEST=postgres://offers_admin:password123@db/user_offers_test #db is hostname
     volumes:
-      - .:/usr/src/app
+      - ./user_offers:/usr/src/app
     tty: true # attach a terminal
+    stdin_open: true
+    command: rails server -b 0.0.0.0 # Binding to all IPs since binding to localhost would not make it available outside the container
   ui:
     container_name: ruby_offers_ui
     build: ./ui/react
