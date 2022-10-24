@@ -3,11 +3,11 @@ import {Navigate, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 
 async function SendRegisterRequest(credentials) {
-  return await fetch('http://localhost:30001/signup', {
+  return await fetch(process.env.REACT_APP_OFFERS_BASE_URL + '/signup', {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
-    credentials: 'same-origin',
+    credentials: 'omit',
     headers: {
       'Content-Type': 'application/json'
     },

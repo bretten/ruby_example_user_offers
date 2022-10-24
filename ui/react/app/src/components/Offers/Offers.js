@@ -8,8 +8,11 @@ function Offers({token, clearToken}) {
 
   useEffect(() => {
     const fetchOffers = async () => {
-      const response = await fetch('http://localhost:30001/offers/index',
+      const response = await fetch(process.env.REACT_APP_OFFERS_BASE_URL + '/offers/index',
         {
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'omit',
           headers: {
             'Authorization': token
           }
