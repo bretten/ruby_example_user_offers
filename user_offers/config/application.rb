@@ -14,6 +14,11 @@ module UserOffers
     # API only
     config.api_only = true
 
+    # Disable sessions since we won't be using cookies. We will use the Auth header
+    config.middleware.delete ActionDispatch::Cookies
+    config.middleware.delete ActionDispatch::Session::CookieStore
+    config.session_store :disabled
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import {Navigate, useNavigate} from "react-router-dom";
 
 async function SendLoginRequest(credentials) {
-  return await fetch('http://localhost:30001/login', {
+  return await fetch(process.env.REACT_APP_OFFERS_BASE_URL + '/login', {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
-    credentials: 'same-origin',
+    credentials: 'omit',
     headers: {
       'Content-Type': 'application/json'
     },
