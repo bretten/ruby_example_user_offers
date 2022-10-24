@@ -26,7 +26,7 @@ async function SendLoginRequest(credentials) {
 function Login({token, setToken}) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [incorrectCredentials, setIncorrectCredentials] = useState(false);
+  const [isIncorrectLogin, setIsIncorrectLogin] = useState(false);
   const navigate = useNavigate();
 
   // Already logged in
@@ -42,13 +42,14 @@ function Login({token, setToken}) {
       password
     });
 
+    // Was there an incorrect login?
+    setIsIncorrectLogin(response.status !== 200);
+
     // Successful login, so store the token
     if (response.status === 200) {
       const newToken = response.headers.get("Authorization");
       setToken(newToken);
       navigate('/');
-    } else {
-      setIncorrectCredentials(true);
     }
   }
 
@@ -56,7 +57,7 @@ function Login({token, setToken}) {
     <div>
       <h1>Login</h1>
       {
-        incorrectCredentials ?
+        isIncorrectLogin ?
           <div>
             <Alert severity="error">Invalid e-mail or password.</Alert>
           </div>
