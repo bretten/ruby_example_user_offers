@@ -42,7 +42,8 @@ function OfferList({token, clearToken}) {
           }}>
           {data && data.length > 0 ?
             data.map((item) => (
-              <Offer id={item.offer.id} description={item.offer.description} />
+              <Offer key={item.offer.id.toString()} id={item.offer.id.toString()}
+                     description={item.offer.description} />
             )) : (
               <span>There are no offers in our system that match your age and gender.</span>
             )

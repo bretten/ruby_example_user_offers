@@ -1,8 +1,11 @@
 import {Navigate} from "react-router-dom";
 import PropTypes from "prop-types";
+import {useEffect} from "react";
 
 function Logout({clearToken}) {
-  clearToken();
+  useEffect(() => {
+    clearToken();
+  });
   return (<Navigate to='/' />);
 }
 
