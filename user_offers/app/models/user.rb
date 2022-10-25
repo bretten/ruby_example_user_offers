@@ -7,6 +7,8 @@ class User < ApplicationRecord
   validates :birthdate, presence: true
   validates :gender, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 3 }
   validates :password, presence: true
+  validates_confirmation_of :password
+  validates :password_confirmation, presence: true
 
   devise :database_authenticatable, :registerable,
          :rememberable, :validatable,

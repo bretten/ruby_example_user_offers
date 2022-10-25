@@ -27,6 +27,7 @@ async function SendRegisterRequest(credentials) {
 function Register({token, setToken}) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [passwordConfirmation, setPasswordConfirmation] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [birthdate, setBirthdate] = useState(null);
@@ -49,6 +50,7 @@ function Register({token, setToken}) {
     const response = await SendRegisterRequest({
       email,
       password,
+      password_confirmation: passwordConfirmation,
       first_name: firstName,
       last_name: lastName,
       birthdate,
@@ -63,8 +65,8 @@ function Register({token, setToken}) {
     } else {
       const errorResponse = (await response.json()).message;
       const validationMessages = [];
-      Object.keys(errorResponse).map((fieldName, index) => {
-        errorResponse[fieldName].map(msg => {
+      Object.keys(errorResponse).forEach((fieldName, index) => {
+        errorResponse[fieldName].forEach(msg => {
           const fieldAndMessage = fieldName + " " + msg;
           if (validationMessages.indexOf(fieldAndMessage) === -1) {
             validationMessages.push(fieldAndMessage);
@@ -104,6 +106,15 @@ function Register({token, setToken}) {
             label="Password"
             InputProps={{
               name: 'password',
+              type: 'password',
+            }} />
+        </Box>
+        <Box display="flex" flexDirection="column" alignItems="stretch" padding={1}>
+          <TextField
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            label="Confirm Password"
+            InputProps={{
+              name: 'password_confirmation',
               type: 'password',
             }} />
         </Box>

@@ -28,7 +28,7 @@ function OfferList({token, clearToken}) {
     };
 
     fetchOffers();
-  }, [token]);
+  }, [token, clearToken, navigate]);
 
   return (
     <div>
