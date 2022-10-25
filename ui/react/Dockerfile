@@ -7,7 +7,7 @@ COPY app/package*.json ./
 
 # Install react
 RUN npm install --silent
-RUN npm install react-scripts -g --silent
+#RUN npm install react-scripts -g --silent # Used to create the initial create-react-app
 
 # Install bash
 RUN apk update && apk add bash
