@@ -6,6 +6,11 @@
     * [How do you stop it?](#how-do-you-stop-it)
     * [What ports are the containers mapped to?](#what-ports-are-the-containers-mapped-to)
     * [If you change any ports, the following files will need to be updated](#if-you-change-any-ports-the-following-files-will-need-to-be-updated)
+* [How do I seed the database?](#how-do-i-seed-the-database)
+* [Using the app](#using-the-app)
+    * [How do I register?](#how-do-i-register)
+    * [How do I login?](#how-do-i-login)
+    * [How do I logout?](#how-do-i-logout)
 * [Security](#security)
     * [CSRF](#csrf)
     * [XSS](#xss)
@@ -97,10 +102,44 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins 'localhost:30000', 'localhost:30001'
 ```
 
-# How do I login?
+# How do I seed the database?
 
 Some data is pre-populated in
 the [seed file](https://github.com/bretten/ruby_example_user_offers/blob/main/user_offers/db/seeds.rb)
+
+From the repository root, first make sure the docker-compose is up:
+
+```
+docker-compose build
+docker-compose up -d
+```
+
+Then, connect to the container that has the Rails app:
+
+```
+docker exec -it ruby_offers bash
+```
+
+Then, run the `db:setup` rails command:
+
+```
+rails db:setup
+```
+
+# Using the app
+
+The front end will be available at: http://localhost:30000.
+
+* If you are **not** authenticated, it will display a link to login or register.
+* If you are authenticated, it will display your **offers** and a link to logout.
+
+## How do I register?
+
+You can fill out the form at: http://localhost:30000/register
+
+## How do I login?
+
+The seeded users are below. You login at: http://localhost:30000/login
 
 * User1
     * E-mail: user1@example.com
@@ -108,6 +147,10 @@ the [seed file](https://github.com/bretten/ruby_example_user_offers/blob/main/us
 * User2
     * E-mail: user1@example.com
     * Password: password!
+
+## How do I logout?
+
+http://localhost:30000/logout
 
 # Security
 
