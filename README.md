@@ -145,7 +145,7 @@ The seeded users are below. You login at: http://localhost:30000/login
     * E-mail: user1@example.com
     * Password: password!
 * User2
-    * E-mail: user1@example.com
+    * E-mail: user2@example.com
     * Password: password!
 
 ## How do I logout?
